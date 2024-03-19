@@ -1,6 +1,7 @@
 const express= require('express');
 const bodyParser=require("body-parser")
 const RoomRoute= require("./routes/room.js")
+const AuthRoute= require("./routes/auth.js")
 
 const dotenv=require('dotenv');
 const mongoose=require('mongoose');
@@ -17,7 +18,7 @@ const PORT = process.env.PORT || 5000
 app.use(bodyParser.json());
 
 app.use("/room", RoomRoute);
-
+app.use("/auth", AuthRoute)
 
 mongoose.connect(MONGODB_URI).then(()=>{
     console.log('connected to the database');
