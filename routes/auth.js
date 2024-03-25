@@ -22,7 +22,9 @@ router.post("/login", async (req, res)=>{
         }
 
         //siganture , id le premier donnee c'est quoi le data qu'on va crypter
-    const token = jwt.sign({_id : user._id},process.env.JWT_SECRET)
+    const token = jwt.sign({UserInfo: {
+        id: user._id,
+        role: user.role}},process.env.JWT_SECRET)
       // send a success message
     res.status(200).send({token:token});
     }
@@ -34,13 +36,14 @@ router.post("/login", async (req, res)=>{
 
 router.post("/register", async (req,res) => {
     try {
-        const {username, password, email, phoneNumber} = req.body;
+        const {username, password, email, phoneNumber,role} = req.body;
 
         const newUser = new User({
             username,
             password,
             email,
             phoneNumber,
+            role: role || undefined
         });
         console.log("data", newUser);
 

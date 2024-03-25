@@ -1,6 +1,6 @@
 const express= require('express');
 const bodyParser=require("body-parser")
-const RoomRoute= require("./routes/room.js")
+const RoomRoute= require("./routes/room.route.js")
 const AuthRoute= require("./routes/auth.js")
 
 const dotenv=require('dotenv');
