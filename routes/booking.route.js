@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Room = require("../models/room");
 const User = require("../models/user");
-const moment = require('moment')
-const momentTimezone = require('moment-timezone')
+
 const authenticate = require ('../middleware/authenticate');
 const verifyRole = require('../middleware/verifyrole');
 

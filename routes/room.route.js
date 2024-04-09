@@ -1,4 +1,6 @@
 const express = require('express');
+const moment = require('moment')
+const momentTimezone = require('moment-timezone')
 const router = express.Router();
 const Room = require("../models/room");
 const authenticate = require ('../middleware/authenticate');
@@ -21,7 +23,7 @@ const durationHours = (bookingStart, bookingEnd) => {
 }
 
 // Make a booking
-router.put('/rooms/:id', authenticate, (req, res) => {
+router.put('/booking/:id', authenticate, (req, res) => {
     const { id } = req.params
   
     // If the recurring array is empty, the booking is not recurring
@@ -63,10 +65,10 @@ router.put('/rooms/:id', authenticate, (req, res) => {
       let recurringBookings = [ firstBooking ]
       
       // A Moment.js object to track each date in the recurring range, initialised with the first date
-      let bookingDateTracker = momentTimezone(firstBooking.bookingStart).tz('Australia/Sydney')
+      let bookingDateTracker = momentTimezone(firstBooking.bookingStart).tz('Africa/Tunis')
       
       // A Moment.js date object for the final booking date in the recurring booking range - set to one hour ahead of the first booking - to calculate the number of days/weeks/months between the first and last bookings when rounded down
-      let lastBookingDate = momentTimezone(firstBooking.recurring[0]).tz('Australia/Sydney')
+      let lastBookingDate = momentTimezone(firstBooking.recurring[0]).tz('Africa/Tunis')
       lastBookingDate.hour(bookingDateTracker.hour() + 1)
       
       // The number of subsequent bookings in the recurring booking date range 
@@ -93,7 +95,7 @@ router.put('/rooms/:id', authenticate, (req, res) => {
           let newBooking = Object.assign({}, firstBooking)
           
           // Calculate the end date/time of the new booking by adding the number of units to the first booking's end date/time
-          let firstBookingEndDate = momentTimezone(firstBooking.bookingEnd).tz('Australia/Sydney')
+          let firstBookingEndDate = momentTimezone(firstBooking.bookingEnd).tz('Africa/Tunis')
           let proposedBookingDateEnd = firstBookingEndDate.add(i + 1, units)
           
           // Update the new booking object's start and end dates
